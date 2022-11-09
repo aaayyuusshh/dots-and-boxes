@@ -1,0 +1,8 @@
+* {
+    margin: 0;
+}
+
+#gameCanvas {
+    /* setting the width & height here gives issues */
+    margin: 10px;
+}
