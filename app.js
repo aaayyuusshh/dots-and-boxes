@@ -39,7 +39,7 @@ function checkForHighlights() {
 }
 
 function drawHighlight(cell) {
-    if(cell.highlightSide == "left") {
+     if(cell.highlightSide == "left") {
         drawLine(cell.left, cell.top, cell.left, cell.bottom);
     }
     else if(cell.highlightSide == "right") {
@@ -93,8 +93,20 @@ function calculateCircleYCoord(idx) {
     return CELL_HEIGHT * (idx + 1);
 }
 
+function clearPreviousHighlighting() {
+    //since a new mousemove is triggered, we must clear previous highlighting
+    for(let row of cellsArray) {
+        for(let cell of row) {
+            cell.highlightSide = null;
+        }
+    }
+}
+
 //triggerd when there is a "mousemove" event
 function highlight(event) {
+    
+    clearPreviousHighlighting();
+
     //coordinates relative to the DOM
     var screenX = event.clientX;
     var screenY = event.clientY;
