@@ -11,6 +11,7 @@ export function cell (x, y) {
     this.top = y;
     this.bottom = y + CELL_HEIGHT;
     this.highlightSide = null;
+    this.selected = {left: false, right: false, top: false, bottom: false};
 
     this.isPartOf = function(x, y) {
         return this.left <= x && this.right > x

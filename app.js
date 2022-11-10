@@ -11,45 +11,77 @@ const CELL_WIDTH = GRID_WIDTH / (NUMBER_OF_CELLS + 2);    //width of an individu
 
 //game variables
 var cellsArray;
+var currHighlightedCells;
+var currTurn; 
+
+const Turn = {
+    PlayerOne: 1,
+    PlayerTwo: 2,
+    PlayerThree: 3
+}
 
 var canvas = document.getElementById("gameCanvas");
 var ctx = getDrawingContext();
+ctx.lineWidth = 4;
 var boundingCanvasRect = canvas.getBoundingClientRect();
 
 //listening for events
 canvas.addEventListener("mousemove", highlight);
+canvas.addEventListener("click", move);
 
 gameInitialization();
 
 //game loop
 setInterval(function(){
     drawBoard();
+    checkForPotentialAnimations();
     drawCircles();
-    checkForHighlights();
+  
 }, 10);
 
-function checkForHighlights() {
+function checkForPotentialAnimations() {
     for(let row of cellsArray) {
         for(let cell of row) {
-            if(cell.highlightSide != null) {
-                drawHighlight(cell);
-            }
+           checkForHighlights(cell);
+           checkForMoves(cell);   
         }
     }
 }
 
-function drawHighlight(cell) {
-     if(cell.highlightSide == "left") {
-        drawLine(cell.left, cell.top, cell.left, cell.bottom);
+function checkForHighlights(cell) {
+    if(cell.highlightSide != null) {
+        drawHighlight(cell.highlightSide, cell, false);
     }
-    else if(cell.highlightSide == "right") {
-        drawLine(cell.right, cell.top, cell.right, cell.bottom);
+}
+
+function checkForMoves(cell) {
+    if(cell.selected.left) {
+        drawHighlight("left", cell, true);
     }
-    else if(cell.highlightSide == "top") {
-        drawLine(cell.left, cell.top, cell.right, cell.top);
+    if(cell.selected.right) {
+        drawHighlight("right", cell, true);
     }
-    else if(cell.highlightSide == "bottom") {
-        drawLine(cell.left, cell.bottom, cell.right, cell.bottom);
+    if(cell.selected.top) {
+        drawHighlight("top", cell, true);
+    }
+    if(cell.selected.bottom) {
+        drawHighlight("bottom", cell, true);
+    }
+
+}
+
+function drawHighlight(side, cell, isDark) {
+     if(side == "left") {
+        drawLine(cell.left, cell.top, cell.left, cell.bottom, isDark);
+    }
+    else if(side == "right") {
+        drawLine(cell.right, cell.top, cell.right, cell.bottom, isDark);
+    }
+    else if(side == "top") {
+        drawLine(cell.left, cell.top, cell.right, cell.top, isDark);
+    }
+    else if(side == "bottom") {
+        drawLine(cell.left, cell.bottom, cell.right, cell.bottom, isDark);
     } 
 }
 
@@ -59,27 +91,49 @@ function getDrawingContext() {
 }
 
 function drawBoard() {
-    ctx.fillStyle = "black";
+    ctx.fillStyle = "gray";
     ctx.fillRect(0, 0, GRID_HEIGHT, GRID_WIDTH);
 }
 
 function drawCircles() {
     for(let i = 0; i <= NUMBER_OF_CELLS; i++) {
         for(let j =0; j <= NUMBER_OF_CELLS; j++) {
-            ctx.strokeStyle = "white"
+            ctx.fillStyle = "white"
             ctx.beginPath();
             ctx.arc(calculateCircleXCoord(j), calculateCircleYCoord(i), 5, 0, 2 * Math.PI);
-            ctx.stroke();
+            ctx.fill();
         }
     }
 }
 
-function drawLine(initialX, initialY, destinationX, destinationY) {
+function drawLine(initialX, initialY, destinationX, destinationY, isDark) {
+
     console.log("here");
     console.log(initialX, initialY, destinationX, destinationY);
-    //@TODO: draws line from initial x,y to desitnation x ,y
+    
+    //color determination
+    let color = null;
+    if(isDark) {
+        if(currTurn == Turn.PlayerOne) {
+            color = "blue";
+        } else if(currTurn == Turn.PlayerTwo) {
+            color = "red";
+        } else {
+            color = "green"
+        }
+    } else {
+        if(currTurn == Turn.PlayerOne) {
+            color = "lightblue ";
+        } else if(currTurn == Turn.PlayerTwo) {
+            color = "pink";
+        } else {
+            color = "lightgreen"
+        } 
+    }
+
+    //drawing
     ctx.beginPath();
-    ctx.strokeStyle = "red";
+    ctx.strokeStyle = color;
     ctx.moveTo(initialX, initialY);
     ctx.lineTo(destinationX, destinationY);
     ctx.stroke();
@@ -102,7 +156,30 @@ function clearPreviousHighlighting() {
     }
 }
 
-//triggerd when there is a "mousemove" event
+//triggered when a "click" event occurs
+function move(event) {
+    for(let highlightedCell of currHighlightedCells) {
+        setMove(cellsArray[highlightedCell.row][highlightedCell.col]);
+    }
+}
+
+function setMove(cell) {
+    if(cell.highlightSide == "left") {
+        cell.selected.left = true;
+    } else if(cell.highlightSide == "right") {
+        cell.selected.right = true;
+    } else if(cell.highlightSide == "top") {
+        cell.selected.top = true;
+    } else if(cell.highlightSide == "bottom") {
+        cell.selected.bottom = true;
+    }
+
+    //clear highlighting bc now we're draw that line
+    cell.highlight = null;
+}
+
+
+//triggered when there is a "mousemove" event
 function highlight(event) {
     
     clearPreviousHighlighting();
@@ -115,11 +192,14 @@ function highlight(event) {
     var canvasX = screenX - boundingCanvasRect.left;
     var canvasY = screenY - boundingCanvasRect.top;
 
+    currHighlightedCells = [];
     for(let i = 0; i < cellsArray.length; i++) {
         for(let j =0; j < cellsArray[0].length; j++) {
             if(cellsArray[i][j].isPartOf(canvasX, canvasY)) {
                 //find closest and set highlight var of the square to the closest
                 findClosestAndSetHighlight(cellsArray[i][j], canvasX, canvasY);
+                currHighlightedCells.push({row: i, col: j});
+                console.log("currHighlighted arr", currHighlightedCells);
             }
         }
     }
@@ -133,22 +213,26 @@ function findClosestAndSetHighlight(cell, x, y) {
     //calculate the side that's the closest to the x,y coords
     var closestSide =  Math.min(distanceToLeft, distanceToRight, distanceToTop, distanceToBottom);
     
-    if(closestSide == distanceToLeft) {
+    if(closestSide == distanceToLeft && !cell.selected.left) {
         cell.highlightSide = "left";
     } 
-    else if(closestSide == distanceToRight) {
+    else if(closestSide == distanceToRight && !cell.selected.right) {
         cell.highlightSide = "right";
     } 
-    else if(closestSide == distanceToTop) {
+    else if(closestSide == distanceToTop && !cell.selected.top) {
         cell.highlightSide = "top";
     } 
-    else if(closestSide == distanceToBottom) {
+    else if(closestSide == distanceToBottom && !cell.selected.bottom) {
         cell.highlightSide = "bottom";
     }
 }
 
 //runs once every game
 function gameInitialization() {
+
+    //whose turn is it at the start of the game? - always playerOne(blue)
+    currTurn = Turn.PlayerOne;
+
     //initializing the cellsArray with all cells in our board
     cellsArray = [];
     for(let i = 0; i < NUMBER_OF_CELLS; i++) {
