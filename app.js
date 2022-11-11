@@ -1,5 +1,6 @@
 /* main script file */
 
+//imports
 import {cell as cell} from "./cell.js"
 
 //game constants
@@ -23,7 +24,6 @@ const Turn = {
 
 var canvas = document.getElementById("gameCanvas");
 var ctx = getDrawingContext();
-ctx.lineWidth = 4;
 var boundingCanvasRect = canvas.getBoundingClientRect();
 
 var playerOneScore = document.querySelectorAll(".playerOneScore .score");
@@ -32,19 +32,9 @@ var playerThreeScore = document.querySelectorAll(".playerThreeScore .score");
 var gameOverModal = document.querySelector(".gameOverModal");
 var gameOverModalWinnerText = document.querySelector(".winnerText");
 
-//listening for events
-canvas.addEventListener("mousemove", highlight);
-canvas.addEventListener("click", move);
-
+listenForGameBoardEvents();
 gameInitialization();
-
-//game loop
-setInterval(function(){
-    drawBoard();
-    checkForPotentialAnimations();
-    drawCircles();
-    updateScores();
-}, 10);
+runGameLoop();
 
 function checkForPotentialAnimations() {
     for(let row of cellsArray) {
@@ -80,9 +70,11 @@ function drawPlayerName(cell) {
     let color = null;
     if(cell.cellOwner == Turn.PlayerOne) {
         color = "blue";
-    } else if(cell.cellOwner == Turn.PlayerTwo) {
+    } 
+    else if(cell.cellOwner == Turn.PlayerTwo) {
         color = "red";
-    } else if(cell.cellOwner == Turn.PlayerThree) {
+    } 
+    else if(cell.cellOwner == Turn.PlayerThree) {
         color = "green"
     }
 
@@ -110,7 +102,6 @@ function checkForMoves(cell) {
     if(cell.selected.bottom) {
         drawHighlight("bottom", cell, true, cell.owner.bottom);
     }
-
 }
 
 function drawHighlight(side, cell, isDark, player) {
@@ -127,7 +118,6 @@ function drawHighlight(side, cell, isDark, player) {
         drawLine(cell.left, cell.bottom, cell.right, cell.bottom, isDark, player);
     } 
 }
-
 
 function getDrawingContext() {
     return canvas.getContext("2d");
@@ -150,7 +140,6 @@ function drawCircles() {
 }
 
 function drawLine(initialX, initialY, destinationX, destinationY, isDark, player) {
-
     // console.log("here");
     // console.log(initialX, initialY, destinationX, destinationY);
     
@@ -176,6 +165,7 @@ function drawLine(initialX, initialY, destinationX, destinationY, isDark, player
 
     //drawing
     ctx.beginPath();
+    ctx.lineWidth = 4;
     ctx.strokeStyle = color;
     ctx.moveTo(initialX, initialY);
     ctx.lineTo(destinationX, destinationY);
@@ -203,7 +193,6 @@ function clearPreviousHighlighting() {
 
 //triggered when a "click" event occurs
 function move(event) {
-
     if(currHighlightedCells.length == 0 || currHighlightedCells == null) {
         return;
     }
@@ -219,9 +208,11 @@ function move(event) {
     if(switchPlayers) {
         if(currTurn == Turn.PlayerOne) {
             currTurn = Turn.PlayerTwo;
-        } else if(currTurn == Turn.PlayerTwo) {
+        } 
+        else if(currTurn == Turn.PlayerTwo) {
             currTurn = Turn.PlayerThree;
-        } else if(currTurn == Turn.PlayerThree) {
+        } 
+        else if(currTurn == Turn.PlayerThree) {
             currTurn = Turn.PlayerOne;
         }
     }
@@ -231,13 +222,16 @@ function setMove(cell) {
     if(cell.highlightSide == "left") {
         cell.selected.left = true;
         cell.owner.left = currTurn;
-    } else if(cell.highlightSide == "right") {
+    } 
+    else if(cell.highlightSide == "right") {
         cell.selected.right = true;
         cell.owner.right = currTurn;
-    } else if(cell.highlightSide == "top") {
+    } 
+    else if(cell.highlightSide == "top") {
         cell.selected.top = true;
         cell.owner.top = currTurn;
-    } else if(cell.highlightSide == "bottom") {
+    } 
+    else if(cell.highlightSide == "bottom") {
         cell.selected.bottom = true;
         cell.owner.bottom = currTurn;
     }
@@ -262,9 +256,11 @@ function returnWinnerName() {
     //@TODO tie cases
     if(maxScore == scores.playerOne) {
         return "Player 1";
-    } else if(maxScore == scores.playerTwo) {
+    } 
+    else if(maxScore == scores.playerTwo) {
         return "Player 2";
-    } else if(maxScore == scores.playerThree) {
+    } 
+    else if(maxScore == scores.playerThree) {
         return "Player 3"
     }
 }
@@ -282,22 +278,20 @@ function checkForGameOver() {
         gameOverModal.style.display = "flex";
         gameOverModalWinnerText.textContent = `${returnWinnerName()} Wins!`;
 
-        //remove event listeners as we don't need to listen for events anymore
-        canvas.removeEventListener("mousemove", highlight)
-        canvas.removeEventListener("click", move);
-
+        removeGameBoardEventListeners();
     }
 }
-
 
 function incrementScores() {
     if(currTurn == Turn.PlayerOne) {
         scores.playerOne++;
         console.log("Player 1 square:", scores.playerOne);
-    } else if(currTurn == Turn.PlayerTwo) {
+    } 
+    else if(currTurn == Turn.PlayerTwo) {
         scores.playerTwo++;
         console.log("Player 2 square:", scores.playerTwo);
-    } else if(currTurn == Turn.PlayerThree) {
+    } 
+    else if(currTurn == Turn.PlayerThree) {
         scores.playerThree++;
         console.log("Player 3 square:", scores.playerThree);
     }
@@ -328,7 +322,6 @@ function lineHasNeighbour(i, j) {
 
 //triggered when there is a "mousemove" event
 function highlight(event) {
-    
     clearPreviousHighlighting();
 
     //coordinates relative to the DOM
@@ -379,7 +372,6 @@ function findClosestAndSetHighlight(cell, x, y) {
 
 //runs once every game
 function gameInitialization() {
-
     //whose turn is it at the start of the game? - always playerOne(blue)
     currTurn = Turn.PlayerOne;
 
@@ -391,4 +383,24 @@ function gameInitialization() {
             cellsArray[i][j] = new cell(calculateCircleXCoord(j), calculateCircleYCoord(i));
         }
     }
+}
+
+function runGameLoop() {
+    setInterval(function(){
+        drawBoard();
+        checkForPotentialAnimations();
+        drawCircles();
+        updateScores();
+    }, 10);
+}
+
+function listenForGameBoardEvents() {
+    canvas.addEventListener("mousemove", highlight);
+    canvas.addEventListener("click", move);
+}
+
+//remove game board specific event listeners once game is over as we can't highlight/make a move anymore
+function removeGameBoardEventListeners() {
+      canvas.removeEventListener("mousemove", highlight)
+      canvas.removeEventListener("click", move);
 }
