@@ -116,14 +116,14 @@ function getDrawingContext() {
 }
 
 function drawBoard() {
-    ctx.fillStyle = "gray";
+    ctx.fillStyle = "rgb(201, 211, 216)"
     ctx.fillRect(0, 0, GRID_HEIGHT, GRID_WIDTH);
 }
 
 function drawCircles() {
     for(let i = 0; i <= NUMBER_OF_CELLS; i++) {
         for(let j =0; j <= NUMBER_OF_CELLS; j++) {
-            ctx.fillStyle = "white"
+            ctx.fillStyle = "black"
             ctx.beginPath();
             ctx.arc(calculateCircleXCoord(j), calculateCircleYCoord(i), 5, 0, 2 * Math.PI);
             ctx.fill();

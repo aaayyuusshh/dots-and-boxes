@@ -8,7 +8,33 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <canvas id="gameCanvas" width="550" height="550"></canvas>
+    <div class="pageWrapper">
+
+        <div class="titleContainer">
+            <h1 class="titleText">dots & boxes</h1>
+            <div class="iconsContainer">
+                <img class="restartButton" src="restartIcon.png" alt="">
+                <img class="homepageButton" src="homePage.png" alt="">
+            </div>
+        </div>
+
+        <canvas id="gameCanvas" width="550" height="550"></canvas>
+
+        <div class="scoreContainer">
+            <div class="playerOneScore">
+                <p class="tag">Player 1:</p>
+                <p class="score">0</p>
+            </div>
+            <div class="playerTwoScore"> 
+                <p class="tag">Player 2:</p>
+                <p class="score">0</p>
+            </div>
+            <div class="playerThreeScore">
+                <p class="tag">Player 3:</p>
+                <p class="score">0</p>
+            </div>
+        </div>
+    </div>
 </body>
 <script src="app.js" type="module"></script>
 </html>
