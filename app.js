@@ -12,7 +12,8 @@ const CELL_WIDTH = GRID_WIDTH / (NUMBER_OF_CELLS + 2);    //width of an individu
 //game variables
 var cellsArray;
 var currHighlightedCells;
-var currTurn; 
+var currTurn;
+var scores = {playerOne: 0, playerTwo: 0, playerThree: 0};
 
 const Turn = {
     PlayerOne: 1,
@@ -51,7 +52,7 @@ function checkForPotentialAnimations() {
 
 function checkForTexts(cell) {
     if(cell.cellOwner != null) {
-        console.log("here");
+        // console.log("here");
         drawPlayerName(cell);
     }
 }
@@ -228,10 +229,24 @@ function setMove(cell) {
     cell.linesDrawn++;
     if(cell.linesDrawn == 4) {
         cell.cellOwner = currTurn;
+        incrementScores();
         return false;
     }
 
     return true;
+}
+
+function incrementScores() {
+    if(currTurn == Turn.PlayerOne) {
+        scores.playerOne++;
+        console.log("Player 1 square:", scores.playerOne);
+    } else if(currTurn == Turn.PlayerTwo) {
+        scores.playerTwo++;
+        console.log("Player 2 square:", scores.playerTwo);
+    } else if(currTurn == Turn.PlayerThree) {
+        scores.playerThree++;
+        console.log("Player 3 square:", scores.playerThree);
+    }
 }
 
 function lineHasNeighbour(i, j) {
