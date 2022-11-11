@@ -277,9 +277,15 @@ function checkForGameOver() {
     //game is over in this case
     if(sumScores() == NUMBER_OF_CELLS * NUMBER_OF_CELLS) {
         console.log("game over!");
+
         //display game over modal
         gameOverModal.style.display = "flex";
         gameOverModalWinnerText.textContent = `${returnWinnerName()} Wins!`;
+
+        //remove event listeners as we don't need to listen for events anymore
+        canvas.removeEventListener("mousemove", highlight)
+        canvas.removeEventListener("click", move);
+
     }
 }
 
