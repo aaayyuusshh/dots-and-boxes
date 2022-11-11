@@ -31,10 +31,16 @@ var playerTwoScore = document.querySelectorAll(".playerTwoScore .score");
 var playerThreeScore = document.querySelectorAll(".playerThreeScore .score");
 var gameOverModal = document.querySelector(".gameOverModal");
 var gameOverModalWinnerText = document.querySelector(".winnerText");
+var restartButton = document.querySelector(".restartButton");
 
 listenForGameBoardEvents();
 gameInitialization();
 runGameLoop();
+listenForRefreshEvent();
+
+function refreshPage() {
+    window.location.reload();
+}
 
 function checkForPotentialAnimations() {
     for(let row of cellsArray) {
@@ -403,4 +409,8 @@ function listenForGameBoardEvents() {
 function removeGameBoardEventListeners() {
       canvas.removeEventListener("mousemove", highlight)
       canvas.removeEventListener("click", move);
+}
+
+function listenForRefreshEvent() {
+    restartButton.addEventListener("click", refreshPage);
 }

@@ -22,6 +22,7 @@ body {
 .homepageButton {
     width: 50px;
     height: 50px;
+    cursor: pointer;
 }
 
 .iconsContainer {
@@ -33,6 +34,7 @@ body {
 
 .restartButton {
     margin-right: 20px;
+    cursor: pointer;
 }
 
 #gameCanvas {
