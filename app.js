@@ -43,9 +43,33 @@ function checkForPotentialAnimations() {
     for(let row of cellsArray) {
         for(let cell of row) {
            checkForHighlights(cell);
-           checkForMoves(cell);   
+           checkForMoves(cell);  
+           checkForTexts(cell); 
         }
     }
+}
+
+function checkForTexts(cell) {
+    if(cell.cellOwner != null) {
+        console.log("here");
+        drawPlayerName(cell);
+    }
+}
+
+function drawPlayerName(cell) {
+    //color determination
+    let color = null;
+    if(cell.cellOwner == Turn.PlayerOne) {
+        color = "blue";
+    } else if(cell.cellOwner == Turn.PlayerTwo) {
+        color = "red";
+    } else if(cell.cellOwner == Turn.PlayerThree) {
+        color = "green"
+    }
+
+    ctx.font = "25px Arial";
+    ctx.fillStyle = color;
+    ctx.fillText ("Me", cell.left + (CELL_WIDTH/2), cell.top + (CELL_HEIGHT/2));
 }
 
 function checkForHighlights(cell) {
@@ -136,6 +160,8 @@ function drawLine(initialX, initialY, destinationX, destinationY, isDark, player
     ctx.strokeStyle = color;
     ctx.moveTo(initialX, initialY);
     ctx.lineTo(destinationX, destinationY);
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle"
     ctx.stroke();
 }
 
@@ -198,9 +224,10 @@ function setMove(cell) {
     }
     //clear highlighting bc now we're draw that line
     cell.highlightSide = null;
-    
+
     cell.linesDrawn++;
     if(cell.linesDrawn == 4) {
+        cell.cellOwner = currTurn;
         return false;
     }
 
