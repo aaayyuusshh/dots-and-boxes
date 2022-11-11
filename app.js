@@ -196,6 +196,29 @@ function setMove(cell) {
     cell.highlightSide = null;
 }
 
+function lineHasNeighbour(i, j) {
+    if(j < cellsArray[0].length - 1 && cellsArray[i][j].highlightSide == "right") {
+        cellsArray[i][j + 1].highlightSide = "left";
+        currHighlightedCells.push({row: i, col: j + 1});
+     } 
+     else if(j > 0 && cellsArray[i][j].highlightSide == "left") {
+         cellsArray[i][j - 1].highlightSide = "right";
+         currHighlightedCells.push({row: i, col: j - 1});
+     }
+     else if(i < cellsArray.length - 1 && cellsArray[i][j].highlightSide == "bottom") {
+         cellsArray[i + 1][j].highlightSide = "top";
+         currHighlightedCells.push({row: i + 1, col: j});
+     }
+     else if(i > 0 && cellsArray[i][j].highlightSide == "top") {
+         cellsArray[i - 1][j].highlightSide = "bottom";
+         currHighlightedCells.push({row: i - 1, col: j});
+     }
+     //else its a edge piece & has no neighbour
+     else {
+         //do nothing
+     }
+}
+
 //triggered when there is a "mousemove" event
 function highlight(event) {
     
@@ -220,6 +243,8 @@ function highlight(event) {
                     currHighlightedCells.push({row: i, col: j});
                 }     
                 console.log("currHighlighted arr", currHighlightedCells);
+                
+                lineHasNeighbour(i, j);
             }
         }
     }
