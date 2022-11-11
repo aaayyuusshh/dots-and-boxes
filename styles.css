@@ -98,6 +98,35 @@ body {
     margin-left: 10px;
 }
 
+.gameOverModal {
+    background-color: rgba(0, 0, 0, 0.588);
+    width: 250px;
+    height: 220px;
+    border: 1px solid white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    position: absolute;
+    top: 20%;;
+    left: 72%;
+    color: white;
+}
+
+.winnerText{
+    font-size: 30px;
+}
+
+.modalCloseButton {
+    position: absolute;
+    font-size: 13px;
+    font-weight: 600;
+    top: 1.5%;
+    left: 94.5%;
+    color: rgb(166, 18, 18);
+}
+
+
 /* .replayButtonContainer {
     display: flex;
     justify-content: center;
