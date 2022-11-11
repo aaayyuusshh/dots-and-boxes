@@ -99,7 +99,7 @@ body {
 }
 
 .gameOverModal {
-    background-color: rgba(0, 0, 0, 0.588);
+    background-color: rgba(0, 0, 0, 0.518);
     width: 250px;
     height: 220px;
     border: 1px solid white;
@@ -108,9 +108,10 @@ body {
     align-items: center;
     justify-content: space-evenly;
     position: absolute;
-    top: 20%;;
+    top: 17.5%;;
     left: 72%;
     color: white;
+    display: none;
 }
 
 .winnerText{
@@ -125,7 +126,6 @@ body {
     left: 94.5%;
     color: rgb(166, 18, 18);
 }
-
 
 /* .replayButtonContainer {
     display: flex;

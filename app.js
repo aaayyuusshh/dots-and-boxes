@@ -26,9 +26,11 @@ var ctx = getDrawingContext();
 ctx.lineWidth = 4;
 var boundingCanvasRect = canvas.getBoundingClientRect();
 
-var playerOneScore = document.querySelector(".playerOneScore .score");
-var playerTwoScore = document.querySelector(".playerTwoScore .score");
-var playerThreeScore = document.querySelector(".playerThreeScore .score");
+var playerOneScore = document.querySelectorAll(".playerOneScore .score");
+var playerTwoScore = document.querySelectorAll(".playerTwoScore .score");
+var playerThreeScore = document.querySelectorAll(".playerThreeScore .score");
+var gameOverModal = document.querySelector(".gameOverModal");
+var gameOverModalWinnerText = document.querySelector(".winnerText");
 
 //listening for events
 canvas.addEventListener("mousemove", highlight);
@@ -62,9 +64,15 @@ function checkForTexts(cell) {
 }
 
 function updateScores() {
-    playerOneScore.textContent = scores.playerOne;
-    playerTwoScore.textContent = scores.playerTwo;
-    playerThreeScore.textContent = scores.playerThree;
+    for(let item of playerOneScore) {
+        item.textContent = scores.playerOne;
+    }
+    for(let item of playerTwoScore) {
+        item.textContent = scores.playerTwo;
+    }
+    for(let item of playerThreeScore) {
+        item.textContent = scores.playerThree;
+    }
 }
 
 function drawPlayerName(cell) {
@@ -240,11 +248,41 @@ function setMove(cell) {
     if(cell.linesDrawn == 4) {
         cell.cellOwner = currTurn;
         incrementScores();
+        checkForGameOver();
+        console.log(sumScores());
         return false;
     }
 
     return true;
 }
+
+function returnWinnerName() {
+    var maxScore = Math.max(scores.playerOne, scores.playerTwo, scores.playerThree);
+    
+    //@TODO tie cases
+    if(maxScore == scores.playerOne) {
+        return "Player 1";
+    } else if(maxScore == scores.playerTwo) {
+        return "Player 2";
+    } else if(maxScore == scores.playerThree) {
+        return "Player 3"
+    }
+}
+
+function sumScores() {
+    return scores.playerOne + scores.playerTwo + scores.playerThree;
+}
+
+function checkForGameOver() {
+    //game is over in this case
+    if(sumScores() == NUMBER_OF_CELLS * NUMBER_OF_CELLS) {
+        console.log("game over!");
+        //display game over modal
+        gameOverModal.style.display = "flex";
+        gameOverModalWinnerText.textContent = `${returnWinnerName()} Wins!`;
+    }
+}
+
 
 function incrementScores() {
     if(currTurn == Turn.PlayerOne) {
