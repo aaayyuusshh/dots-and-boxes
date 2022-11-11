@@ -58,7 +58,7 @@ body {
     display: flex;
 }
 .playerOneScore .tag {
-    color: rgb(255, 81, 81);
+    color: rgb(126, 126, 255);
     font-size: 30px;
     font-weight: 600;
 }
@@ -74,7 +74,7 @@ body {
     display: flex;
 }
 .playerTwoScore .tag {
-    color: rgb(126, 126, 255);
+    color: rgb(255, 81, 81);
     font-size: 30px;
     font-weight: 600;
 }

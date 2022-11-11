@@ -26,6 +26,10 @@ var ctx = getDrawingContext();
 ctx.lineWidth = 4;
 var boundingCanvasRect = canvas.getBoundingClientRect();
 
+var playerOneScore = document.querySelector(".playerOneScore .score");
+var playerTwoScore = document.querySelector(".playerTwoScore .score");
+var playerThreeScore = document.querySelector(".playerThreeScore .score");
+
 //listening for events
 canvas.addEventListener("mousemove", highlight);
 canvas.addEventListener("click", move);
@@ -37,7 +41,7 @@ setInterval(function(){
     drawBoard();
     checkForPotentialAnimations();
     drawCircles();
-  
+    updateScores();
 }, 10);
 
 function checkForPotentialAnimations() {
@@ -55,6 +59,12 @@ function checkForTexts(cell) {
         // console.log("here");
         drawPlayerName(cell);
     }
+}
+
+function updateScores() {
+    playerOneScore.textContent = scores.playerOne;
+    playerTwoScore.textContent = scores.playerTwo;
+    playerThreeScore.textContent = scores.playerThree;
 }
 
 function drawPlayerName(cell) {
