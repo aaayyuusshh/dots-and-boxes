@@ -108,8 +108,8 @@ function drawCircles() {
 
 function drawLine(initialX, initialY, destinationX, destinationY, isDark, player) {
 
-    console.log("here");
-    console.log(initialX, initialY, destinationX, destinationY);
+    // console.log("here");
+    // console.log(initialX, initialY, destinationX, destinationY);
     
     //color determination
     let color = null;
@@ -162,18 +162,23 @@ function move(event) {
     if(currHighlightedCells.length == 0 || currHighlightedCells == null) {
         return;
     }
+    var switchPlayers = true;
 
     for(let highlightedCell of currHighlightedCells) {
-        setMove(cellsArray[highlightedCell.row][highlightedCell.col]);
+        if(!setMove(cellsArray[highlightedCell.row][highlightedCell.col])) {
+            switchPlayers = false;
+        }
     }
 
     //switch players after a successful move.
-    if(currTurn == Turn.PlayerOne) {
-        currTurn = Turn.PlayerTwo;
-    } else if(currTurn == Turn.PlayerTwo) {
-        currTurn = Turn.PlayerThree;
-    } else if(currTurn == Turn.PlayerThree) {
-        currTurn = Turn.PlayerOne;
+    if(switchPlayers) {
+        if(currTurn == Turn.PlayerOne) {
+            currTurn = Turn.PlayerTwo;
+        } else if(currTurn == Turn.PlayerTwo) {
+            currTurn = Turn.PlayerThree;
+        } else if(currTurn == Turn.PlayerThree) {
+            currTurn = Turn.PlayerOne;
+        }
     }
 }
 
@@ -191,9 +196,15 @@ function setMove(cell) {
         cell.selected.bottom = true;
         cell.owner.bottom = currTurn;
     }
-
     //clear highlighting bc now we're draw that line
     cell.highlightSide = null;
+    
+    cell.linesDrawn++;
+    if(cell.linesDrawn == 4) {
+        return false;
+    }
+
+    return true;
 }
 
 function lineHasNeighbour(i, j) {
@@ -242,8 +253,6 @@ function highlight(event) {
                 if(cellsArray[i][j].highlightSide != null) {
                     currHighlightedCells.push({row: i, col: j});
                 }     
-                console.log("currHighlighted arr", currHighlightedCells);
-                
                 lineHasNeighbour(i, j);
             }
         }

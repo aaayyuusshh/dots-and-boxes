@@ -13,6 +13,7 @@ export function cell (x, y) {
     this.highlightSide = null;
     this.selected = {left: false, right: false, top: false, bottom: false};
     this.owner = {left: null, right: null, top: null, bottom: null};
+    this.linesDrawn = 0;
 
     this.isPartOf = function(x, y) {
         return this.left <= x && this.right > x
