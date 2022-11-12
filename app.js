@@ -84,7 +84,7 @@ function drawPlayerName(cell) {
         color = "green"
     }
 
-    ctx.font = "25px Arial";
+    ctx.font = "25px Lato";
     ctx.fillStyle = color;
     ctx.fillText ("Me", cell.left + (CELL_WIDTH/2), cell.top + (CELL_HEIGHT/2));
 }
