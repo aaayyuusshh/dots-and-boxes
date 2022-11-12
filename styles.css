@@ -1,3 +1,5 @@
+/* -- global styles -- */
+
 * {
     margin: 0;
 }
@@ -6,6 +8,8 @@ body {
     background-color: rgb(27, 27, 27);
     color: rgb(255, 255, 255);
 }
+
+/* -- gameplay page styles -- */
 
 .pageWrapper {
     height: 100vh;
@@ -129,8 +133,100 @@ body {
     color: rgb(166, 18, 18);
 }
 
-/* .replayButtonContainer {
+/* -- landing page styles -- */
+
+.landingPageBody {
+    background-color: rgb(27,27,27);
+    color: white;
+}
+
+.navBarContainer {
+    height: 100px;
+    /* border: 2px solid white; */
     display: flex;
     justify-content: center;
-    margin-top: 15px;
-} */
+    /* border-bottom: 1px solid rgb(217, 217, 217); */
+    position: relative;
+}
+
+.navBarTitle {
+    margin-top: 27px;
+    font-size: 35px;
+}
+.paperImage {
+    height: 35px;
+    margin-top: 30px;
+    margin-right: 12px;
+}
+
+.pencilImage {
+    height: 38px;
+    margin-top: 24px;
+    margin-left: 10px;
+}
+
+.navBarWikiImage {
+    position: absolute;
+    top: 15px;
+    left: 96%;
+    width: 43px;
+}
+
+.heroSection {
+    position: relative;
+    display: flex;
+    justify-content: space-evenly;
+    height: 100%;
+    margin-top: 50px;
+}
+
+.landingPageImage {
+    width: 600px;
+    opacity: 0.8;
+    border-radius: 20px;
+}
+
+.rightHeroSide {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    width: 450px;
+    height: 370px;
+    margin-top: 80px;
+}
+
+.rightHeroSideTitle {
+    font-size: 55px;
+}
+
+.rightHeroSideText {
+    font-size: 19px;
+}
+
+.buttonsContainer {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.playNowButton {
+    width: 190px;
+    padding: 8px 0px;
+    font-size: 33px;
+    font-weight: 600;
+    color: white;
+    background-color: rgb(47, 45, 173);
+    border: none;
+    border-radius: 50px;
+    margin-right: 20px;
+}
+
+.watchGamePlayButton {
+    width: 210px;
+    padding: 10px;
+    font-size: 24px;
+    background-color: rgba(255, 255, 255, 0);
+    border: 1px solid white;
+    color: white;
+    border-radius: 15px;
+}
