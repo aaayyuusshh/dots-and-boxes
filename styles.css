@@ -9,6 +9,11 @@ body {
     color: rgb(255, 255, 255);
 }
 
+a {
+    text-decoration: none;
+    color: white;
+}
+
 /* -- gameplay page styles -- */
 
 .pageWrapper {
@@ -170,6 +175,7 @@ body {
     top: 15px;
     left: 96%;
     width: 43px;
+    cursor: pointer;
 }
 
 .heroSection {
@@ -219,6 +225,7 @@ body {
     border: none;
     border-radius: 50px;
     margin-right: 20px;
+    cursor: pointer;
 }
 
 .watchGamePlayButton {
@@ -229,4 +236,5 @@ body {
     border: 1px solid white;
     color: white;
     border-radius: 15px;
+    cursor: pointer;
 }

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dots & Boxes</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="pageWrapper">
+
+        <div class="titleContainer">
+            <h1 class="titleText">dots & boxes</h1>
+            <div class="iconsContainer">
+                <img class="restartButton" src="restartIcon.png" alt="">
+                <a href="index.html"><img class="homepageButton" src="homePage.png" alt=""></a>
+            </div>
+        </div>
+
+        <canvas id="gameCanvas" width="550" height="550"></canvas>
+
+        <div class="scoreContainer">
+            <div class="playerOneScore">
+                <p class="tag">Player 1:</p>
+                <p class="score">0</p>
+            </div>
+            <div class="playerTwoScore"> 
+                <p class="tag">Player 2:</p>
+                <p class="score">0</p>
+            </div>
+            <div class="playerThreeScore">
+                <p class="tag">Player 3:</p>
+                <p class="score">0</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="gameOverModal">
+        <p class="modalCloseButton"">X</p>
+        <div class="playerOneScore">
+            <p class="tag">Player 1:</p>
+            <p class="score">0</p>
+        </div>
+        <div class="playerTwoScore"> 
+            <p class="tag">Player 2:</p>
+            <p class="score">0</p>
+        </div>
+        <div class="playerThreeScore">
+            <p class="tag">Player 3:</p>
+            <p class="score">0</p>
+        </div>
+       <p class="winnerText">Player X Wins!</p>
+       <p class="restartText">Click restart button.</p>
+    </div>
+</body>
+<script src="app.js" type="module"></script>
+</html>

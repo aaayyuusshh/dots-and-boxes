@@ -7,52 +7,29 @@
     <title>Dots & Boxes</title>
     <link rel="stylesheet" href="styles.css">
 </head>
-<body>
-    <div class="pageWrapper">
+<body class="landingPageBody">
+    <nav class="navBarContainer">
+        <img class="paperImage" src="paper.png" alt="">
+        <h1 class="navBarTitle">dots & boxes.</h1>
+        <img class="pencilImage" src="pencil.png" alt="">
+        <a href="https://en.wikipedia.org/wiki/Dots_and_Boxes"><img class="navBarWikiImage" src="wikiImage.png" alt=""></a>
+    </nav>
 
-        <div class="titleContainer">
-            <h1 class="titleText">dots & boxes</h1>
-            <div class="iconsContainer">
-                <img class="restartButton" src="restartIcon.png" alt="">
-                <img class="homepageButton" src="homePage.png" alt="">
+    <section class="heroSection">
+        <div class="leftHeroSide">
+            <img class="landingPageImage" src="landingImage2.jpeg" alt="">
+        </div>
+        <div class="rightHeroSide">
+            <h1 class="rightHeroSideTitle">LET THE GAME BEGIN!</h1>
+            <p class="rightHeroSideText">
+                Relive your childhood days by playing your favourite paper & pencil game.
+                It's simple... whoever makes the most number of squares is the winner.
+            </p>
+            <div class="buttonsContainer">
+                <button class="playNowButton"><a href="game.html">Play Now</a></button>
+                <button class="watchGamePlayButton"><a href="https://www.youtube.com/watch?v=_sFviFunzHY">View Gameplay</a></button>
             </div>
         </div>
-
-        <canvas id="gameCanvas" width="550" height="550"></canvas>
-
-        <div class="scoreContainer">
-            <div class="playerOneScore">
-                <p class="tag">Player 1:</p>
-                <p class="score">0</p>
-            </div>
-            <div class="playerTwoScore"> 
-                <p class="tag">Player 2:</p>
-                <p class="score">0</p>
-            </div>
-            <div class="playerThreeScore">
-                <p class="tag">Player 3:</p>
-                <p class="score">0</p>
-            </div>
-        </div>
-    </div>
-
-    <div class="gameOverModal">
-        <p class="modalCloseButton"">X</p>
-        <div class="playerOneScore">
-            <p class="tag">Player 1:</p>
-            <p class="score">0</p>
-        </div>
-        <div class="playerTwoScore"> 
-            <p class="tag">Player 2:</p>
-            <p class="score">0</p>
-        </div>
-        <div class="playerThreeScore">
-            <p class="tag">Player 3:</p>
-            <p class="score">0</p>
-        </div>
-       <p class="winnerText">Player X Wins!</p>
-       <p class="restartText">Click restart button.</p>
-    </div>
+    </section>
 </body>
-<script src="app.js" type="module"></script>
 </html>
