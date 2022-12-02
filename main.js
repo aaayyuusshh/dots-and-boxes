@@ -1,6 +1,6 @@
 /* client script file (landing page) */
 
-const socket = io("http://127.0.0.1:3000");
+import {socket} from "./socket.js"
 
 //handling a new room being created
 var createGameButton = document.querySelector(".playNowButton");
