@@ -275,3 +275,15 @@ a {
 ::placeholder {
     font-size: 14px;
 }
+
+.gameCodeTitle {
+    /* display: none; */
+    font-size: 20px;
+    font-weight: 300;
+    color:rgb(255, 255, 255)
+}
+
+.gameCode {
+    color:rgb(255, 238, 0);
+    font-weight: 700;
+}

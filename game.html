@@ -20,6 +20,8 @@
                 <a href="index.html"><img class="homepageButton" src="homePage.png" alt=""></a>
             </div>
         </div>
+        
+        <h1 class="gameCodeTitle">Game Code:<span class="gameCode"></span></h1>
 
         <canvas id="gameCanvas" width="550" height="550"></canvas>
 
@@ -57,5 +59,6 @@
        <p class="restartText">Click restart button.</p>
     </div>
 </body>
-<script src="app.js" type="module"></script>
+<script defer src="http://127.0.0.1:3000/socket.io/socket.io.js"></script>
+<script defer src="app.js" type="module"></script>
 </html>

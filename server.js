@@ -9,9 +9,16 @@ const io = require('socket.io')(3000, {
 
 let rooms = [];     //list of all room id's
 let roomInfo = {};  //info regarding all rooms
+let roomTurns = {};
+
+const Turn = {
+    PlayerOne: 1,
+    PlayerTwo: 2,
+    PlayerThree: 3
+}
 
 io.on('connection', socket => {
-    console.log("\n---connection established---\n");
+    console.log("\n---connection established---", socket.id, "\n");
 
     //handling a new room being created
     socket.on("create-game", roomCode => {
@@ -19,11 +26,12 @@ io.on('connection', socket => {
         rooms.push(roomCode);
         roomInfo[roomCode] = [];
         roomInfo[roomCode].push(socket.id);
+        roomTurns[roomCode] = socket.id;    //setting whose turn it is currently
         socket.join(roomCode);
-        socket.emit("add-code-html", roomCode);
     });
 
     //handling an existing room being joined
+    //@TODO: need to use the .to("room name") to only send moves to clients in the same room (do this at the end)
     socket.on("join-game", roomCode => {
         console.log("~~server recieved the click~~");
         if(rooms.includes(roomCode) && roomInfo[roomCode].length < 3) {
@@ -33,6 +41,22 @@ io.on('connection', socket => {
             socket.emit("allow-join");
         }
         console.log("All players inside this room: ", roomInfo[roomCode]);
+    });
+
+    socket.on("check-for-start", () => {
+        var allRooms = socket.rooms;
+        console.log(allRooms);
+    });
+
+    //handle highlighting
+    socket.on("highlight", (canvasX, canvasY) => {
+        console.log(canvasX, canvasY);
+        socket.broadcast.emit("highlight-clients", canvasX, canvasY)
+    });
+
+    //handling making a move
+    socket.on("move", () => {
+        socket.broadcast.emit("move-clients");
     });
 });
 

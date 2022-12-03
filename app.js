@@ -2,6 +2,7 @@
 
 //imports
 import {cell as cell} from "./cell.js"
+import {socket} from "./socket.js"
 
 //game constants
 const GRID_HEIGHT = 550;
@@ -11,10 +12,10 @@ const CELL_HEIGHT = GRID_HEIGHT / (NUMBER_OF_CELLS + 2);  //height of an individ
 const CELL_WIDTH = GRID_WIDTH / (NUMBER_OF_CELLS + 2);    //width of an individual cell, +2 to account for l&r margins
 
 //game variables
-var cellsArray;
-var currHighlightedCells;
-var currTurn;
-var scores = {playerOne: 0, playerTwo: 0, playerThree: 0};
+var cellsArray;             //contains each cell in the grid & its properties
+var currHighlightedCells;   //cells highlighted at the current moment, nullify everytime mouse moves.
+var currTurn;               //whose turn is it right now?
+var scores = {playerOne: 0, playerTwo: 0, playerThree: 0};  //score tracking object
 
 const Turn = {
     PlayerOne: 1,
@@ -38,10 +39,50 @@ gameInitialization();
 runGameLoop();
 listenForRefreshEvent();
 
+//runs once every game
+function gameInitialization() {
+    //whose turn is it at the start of the game? - always playerOne(blue)
+    currTurn = Turn.PlayerOne;
+
+    //initializing the cellsArray with all cells in our board
+    cellsArray = [];
+    for(let i = 0; i < NUMBER_OF_CELLS; i++) {
+        cellsArray[i] = [];
+        for(let j = 0; j < NUMBER_OF_CELLS; j++) {
+            cellsArray[i][j] = new cell(calculateCircleXCoord(j), calculateCircleYCoord(i));
+        }
+    }
+}
+
+function runGameLoop() {
+    setInterval(function(){
+        drawBoard();
+        checkForPotentialAnimations();
+        drawCircles();
+        updateScores();
+    }, 10);
+}
+
+function listenForGameBoardEvents() {
+    canvas.addEventListener("mousemove", highlight);
+    canvas.addEventListener("click", move);
+}
+
+//remove game board specific event listeners once game is over as we can't highlight/make a move anymore
+function removeGameBoardEventListeners() {
+      canvas.removeEventListener("mousemove", highlight)
+      canvas.removeEventListener("click", move);
+}
+
+function listenForRefreshEvent() {
+    restartButton.addEventListener("click", refreshPage);
+}
+
 function refreshPage() {
     window.location.reload();
 }
 
+//updating already made moves throughout the interval
 function checkForPotentialAnimations() {
     for(let row of cellsArray) {
         for(let cell of row) {
@@ -197,8 +238,40 @@ function clearPreviousHighlighting() {
     }
 }
 
+socket.on("move-clients", () => {
+    move2();
+});
+
+function move2() {
+    if(currHighlightedCells.length == 0 || currHighlightedCells == null) {
+        return;
+    }
+    var switchPlayers = true;
+
+    for(let highlightedCell of currHighlightedCells) {
+        if(!setMove(cellsArray[highlightedCell.row][highlightedCell.col])) {
+            switchPlayers = false;
+        }
+    }
+
+    //switch players after a successful move.
+    if(switchPlayers) {
+        if(currTurn == Turn.PlayerOne) {
+            currTurn = Turn.PlayerTwo;
+        } 
+        else if(currTurn == Turn.PlayerTwo) {
+            currTurn = Turn.PlayerThree;
+        } 
+        else if(currTurn == Turn.PlayerThree) {
+            currTurn = Turn.PlayerOne;
+        }
+    }
+}
+
 //triggered when a "click" event occurs
 function move(event) {
+    socket.emit("move");
+
     if(currHighlightedCells.length == 0 || currHighlightedCells == null) {
         return;
     }
@@ -326,8 +399,33 @@ function lineHasNeighbour(i, j) {
      }
 }
 
+socket.on("highlight-clients", (canvasX, canvasY) => {
+    highlight2(canvasX, canvasY);
+});
+
+//triggered when there is a "mousemove" event
+function highlight2(canvasX, canvasY) {
+    clearPreviousHighlighting();
+
+    currHighlightedCells = [];
+    for(let i = 0; i < cellsArray.length; i++) {
+        for(let j =0; j < cellsArray[0].length; j++) {
+            if(cellsArray[i][j].isPartOf(canvasX, canvasY)) {
+                //find closest and set highlight var of the square to the closest
+                findClosestAndSetHighlight(cellsArray[i][j], canvasX, canvasY);
+
+                if(cellsArray[i][j].highlightSide != null) {
+                    currHighlightedCells.push({row: i, col: j});
+                }     
+                lineHasNeighbour(i, j);
+            }
+        }
+    }
+}
+
 //triggered when there is a "mousemove" event
 function highlight(event) {
+
     clearPreviousHighlighting();
 
     //coordinates relative to the DOM
@@ -337,6 +435,8 @@ function highlight(event) {
     //extract coordiantes relative to the canvas
     var canvasX = screenX - boundingCanvasRect.left;
     var canvasY = screenY - boundingCanvasRect.top;
+
+    socket.emit("highlight", canvasX, canvasY);
 
     currHighlightedCells = [];
     for(let i = 0; i < cellsArray.length; i++) {
@@ -374,43 +474,4 @@ function findClosestAndSetHighlight(cell, x, y) {
     else if(closestSide == distanceToBottom && !cell.selected.bottom) {
         cell.highlightSide = "bottom";
     }
-}
-
-//runs once every game
-function gameInitialization() {
-    //whose turn is it at the start of the game? - always playerOne(blue)
-    currTurn = Turn.PlayerOne;
-
-    //initializing the cellsArray with all cells in our board
-    cellsArray = [];
-    for(let i = 0; i < NUMBER_OF_CELLS; i++) {
-        cellsArray[i] = [];
-        for(let j = 0; j < NUMBER_OF_CELLS; j++) {
-            cellsArray[i][j] = new cell(calculateCircleXCoord(j), calculateCircleYCoord(i));
-        }
-    }
-}
-
-function runGameLoop() {
-    setInterval(function(){
-        drawBoard();
-        checkForPotentialAnimations();
-        drawCircles();
-        updateScores();
-    }, 10);
-}
-
-function listenForGameBoardEvents() {
-    canvas.addEventListener("mousemove", highlight);
-    canvas.addEventListener("click", move);
-}
-
-//remove game board specific event listeners once game is over as we can't highlight/make a move anymore
-function removeGameBoardEventListeners() {
-      canvas.removeEventListener("mousemove", highlight)
-      canvas.removeEventListener("click", move);
-}
-
-function listenForRefreshEvent() {
-    restartButton.addEventListener("click", refreshPage);
 }
