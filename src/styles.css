@@ -295,3 +295,43 @@ a {
     flex-direction: column;
     height: 100vh;
 }
+
+.waitContainer {
+    background-color: rgb(255, 255, 255);
+    /* border: 1px solid black; */
+    display: flex;
+    flex-direction: column;
+    width: 350px;
+    height: 110px;
+    margin-bottom: 100px;
+    border-radius: 5px;
+    position: absolute;
+    font-size: 20px;
+    color: black;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+.waitTitle {
+    padding: 8px 10px 5px 10px;
+}
+
+.waitContainer hr {
+    /* width: calc(100% + 20px);
+    margin: 0 -11px; */
+    color: black;
+}
+
+.waitTextContainer {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    background-color: rgba(0, 0, 0, 0.049);
+}
+
+.waitImage {
+    height: 60px;
+    width:60px;
+}
