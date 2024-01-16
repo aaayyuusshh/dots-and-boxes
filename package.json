@@ -2,9 +2,9 @@
   "name": "dots-and-boxes",
   "version": "1.0.0",
   "description": "",
-  "main": "app.js",
+  "main": "src/app.js",
   "scripts": {
-    "devStart": "nodemon server.js"
+    "devStart": "nodemon src/server.js"
   },
   "repository": {
     "type": "git",
