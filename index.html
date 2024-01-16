@@ -10,34 +10,85 @@
         @import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Poppins:wght@400;600&display=swap');
     </style>
 </head>
-<body class="landingPageBody">
-    <nav class="navBarContainer">
-        <img class="paperImage" src="paper.png" alt="">
-        <h1 class="navBarTitle">dots & boxes.</h1>
-        <img class="pencilImage" src="pencil.png" alt="">
-        <a href="https://en.wikipedia.org/wiki/Dots_and_Boxes"><img class="navBarWikiImage" src="wikiImage.png" alt=""></a>
-    </nav>
-
-    <section class="heroSection">
-        <div class="leftHeroSide">
-            <img class="landingPageImage" src="landingImage2.jpeg" alt="">
-        </div>
-        <div class="rightHeroSide">
-            <h1 class="rightHeroSideTitle">LET THE GAME BEGIN!</h1>
-            <p class="rightHeroSideText">
-                Relive your childhood days by playing your favourite paper & pencil game.
-                It's simple... whoever makes the most number of squares is the winner.
-            </p>
-            <div class="buttonsContainer">
-                <button class="playNowButton"><a href="game.html">Create Game</a></button>
-                <button class="watchGamePlayButton"><a href="https://www.youtube.com/watch?v=_sFviFunzHY">View Gameplay</a></button>
+<body>
+    <div class="landingPageBody">
+        <nav class="navBarContainer">
+            <img class="paperImage" src="paper.png" alt="">
+            <h1 class="navBarTitle">dots & boxes.</h1>
+            <img class="pencilImage" src="pencil.png" alt="">
+            <a href="https://en.wikipedia.org/wiki/Dots_and_Boxes"><img class="navBarWikiImage" src="wikiImage.png" alt=""></a>
+        </nav>
+    
+        <section class="heroSection">
+            <div class="leftHeroSide">
+                <img class="landingPageImage" src="landingImage2.jpeg" alt="">
             </div>
-            <form class="joinRoomContainer">
-                <input type="text" id="roomCodeInput" placeholder="Enter Code To Join Game....">
-                <button type="submit" id="joinRoomButton">JOIN</button>
-            </form>
+            <div class="rightHeroSide">
+                <h1 class="rightHeroSideTitle">LET THE GAME BEGIN!</h1>
+                <p class="rightHeroSideText">
+                    Relive your childhood days by playing your favourite paper & pencil game.
+                    It's simple... whoever makes the most number of squares is the winner.
+                </p>
+                <div class="buttonsContainer">
+                    <a href="#gamePage"><button class="playNowButton">Create Game</button></a>
+                    <button class="watchGamePlayButton"><a href="https://www.youtube.com/watch?v=_sFviFunzHY">View Gameplay</a></button>
+                </div>
+                <form class="joinRoomContainer">
+                    <input type="text" id="roomCodeInput" placeholder="Enter Code To Join Game....">
+                    <button type="submit" id="joinRoomButton">JOIN</button>
+                </form>
+            </div>
+        </section>
+    </div>
+   
+    <div id="gamePage">
+        <div class="pageWrapper">
+            <div class="titleContainer">
+                <h1 class="titleText">dots & boxes</h1>
+                <div class="iconsContainer">
+                    <img class="restartButton" src="restartIcon.png" alt="">
+                    <a href="index.html"><img class="homepageButton" src="homePage.png" alt=""></a>
+                </div>
+            </div>
+            
+            <h1 class="gameCodeTitle">Game Code:<span class="gameCode"></span></h1>
+    
+            <canvas id="gameCanvas" width="550" height="550"></canvas>
+    
+            <div class="scoreContainer">
+                <div class="playerOneScore">
+                    <p class="tag">Player 1:</p>
+                    <p class="score">0</p>
+                </div>
+                <div class="playerTwoScore"> 
+                    <p class="tag">Player 2:</p>
+                    <p class="score">0</p>
+                </div>
+                <div class="playerThreeScore">
+                    <p class="tag">Player 3:</p>
+                    <p class="score">0</p>
+                </div>
+            </div>
         </div>
-    </section>
+    
+        <div class="gameOverModal">
+            <p class="modalCloseButton"">X</p>
+            <div class="playerOneScore">
+                <p class="tag">Player 1:</p>
+                <p class="score">0</p>
+            </div>
+            <div class="playerTwoScore"> 
+                <p class="tag">Player 2:</p>
+                <p class="score">0</p>
+            </div>
+            <div class="playerThreeScore">
+                <p class="tag">Player 3:</p>
+                <p class="score">0</p>
+            </div>
+           <p class="winnerText">Player X Wins!</p>
+           <p class="restartText">Click restart button.</p>
+        </div>
+    </div>
 </body>
 <script defer src="http://127.0.0.1:3000/socket.io/socket.io.js"></script>
 <script defer src="main.js" type="module"></script>

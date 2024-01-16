@@ -144,6 +144,8 @@ a {
 .landingPageBody {
     background-color: rgb(27,27,27);
     color: rgba(255, 255, 255, 0.904);
+    height: 100vh;
+    overflow: hidden;
 }
 
 .navBarContainer {
@@ -286,4 +288,10 @@ a {
 .gameCode {
     color:rgb(255, 238, 0);
     font-weight: 700;
+}
+
+#gamePage {
+    display: none;
+    flex-direction: column;
+    height: 100vh;
 }
