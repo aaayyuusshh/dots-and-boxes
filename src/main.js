@@ -512,12 +512,17 @@ createGameButton.addEventListener("click", e => {
     socket.emit("create-game", roomCode);
 });
 
-
 socket.on("show-code", roomCode => {
     // <h1 class="gameCodeTitle">Game Code:<span class="gameCode"></span></h1>
     let gameCodeTitle = document.querySelector(".gameCodeTitle");
     let gameCode = document.querySelector(".gameCode");
     gameCode.textContent = " " + roomCode;
+});
+
+socket.on("remove-wait-modal", () => {
+    console.log("remove-wait-modal");
+    let waitContainer = document.querySelector(".waitContainer");
+    waitContainer.style.display = "none";
 });
 
 //handling an existing room being joined
@@ -539,8 +544,6 @@ socket.on("allow-join", () => {
     gamePage.style.display = "flex";
     gamePage.scrollIntoView();
 });
-
-    /* helper functions below */
 
 function generateRoomCode(length) {
     //@TODO: need an algo or API to generate random codes

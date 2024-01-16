@@ -47,6 +47,7 @@ io.on('connection', (socket) => {
         if(roomInfo && roomInfo[roomCode].length == 3) {
             let clientsInRoom = roomInfo[roomCode];
             let currentTurn = roomTurns[roomCode];
+            io.to(roomCode).emit("remove-wait-modal");
             socket.to(clientsInRoom[currentTurn-1]).emit("activate-event-listener");
         }
 
