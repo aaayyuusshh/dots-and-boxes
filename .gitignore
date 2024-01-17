@@ -1,2 +1,6 @@
 **/.DS_Store
 **/.vscode/
+build
+npm-debug.log
+.nyc
+.env
