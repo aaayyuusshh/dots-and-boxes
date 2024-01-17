@@ -69,3 +69,19 @@ dots-and-boxes is an online multiplayer implementation of the classic Dots and B
    - Players take turns making moves to form squares.
    - Highlighting and moves made from one player is transmitted to other players through web sockets.
    - Scores are updated based on the number of squares claimed.
+
+## Miscellaneous Planning
+
+![dots-and-boxes-1](https://github.com/aaayyuusshh/dots-and-boxes/assets/80851741/169a05fb-494c-4320-9c72-6600a220b78e)
+
+![dots-and-boxes-2](https://github.com/aaayyuusshh/dots-and-boxes/assets/80851741/23aa2e3e-68a7-457e-95e3-3a11c124b972)
+
+![dots-and-boxes-3](https://github.com/aaayyuusshh/dots-and-boxes/assets/80851741/30d12c2e-1f6f-4d88-9c21-d6c160f7f000)
+
+![dots-and-boxes-4](https://github.com/aaayyuusshh/dots-and-boxes/assets/80851741/4e76c1bd-9dae-49a4-a6e3-f344c8f1daf3)
+
+![dots-and-boxes-5](https://github.com/aaayyuusshh/dots-and-boxes/assets/80851741/197e29a1-3cdb-4742-bd37-24c606d3e77e)
+
+![dots-and-boxes-6](https://github.com/aaayyuusshh/dots-and-boxes/assets/80851741/fe0b3dbc-6da7-40e6-80a3-967bc30eba53)
+
+![dots-and-boxes-7](https://github.com/aaayyuusshh/dots-and-boxes/assets/80851741/c04b0775-7bda-4c70-82f0-655d0802a92f)
