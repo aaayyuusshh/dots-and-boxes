@@ -17,7 +17,7 @@
   },
   "homepage": "https://github.com/aaayyuusshh/dots-and-boxes#readme",
   "devDependencies": {
-    "nodemon": "^2.0.20"
+    "nodemon": "^3.0.3"
   },
   "dependencies": {
     "socket.io": "^4.5.4",
