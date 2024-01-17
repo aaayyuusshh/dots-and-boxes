@@ -29,7 +29,7 @@ io.on('connection', (socket) => {
         roomTurns[roomCode] = 1;
         console.log(roomTurns.roomCode);
         socket.join(roomCode);
-        socket.emit("show-code", roomCode);
+        socket.emit("show-code", roomCode, ".playerOneScore");
     });
 
     //handling an existing room being joined
@@ -42,8 +42,13 @@ io.on('connection', (socket) => {
             clientRoomMapping[socket.id] = roomCode;
             socket.join(roomCode);
             socket.emit("allow-join");
-            socket.emit("show-code", roomCode);
+            if(roomInfo[roomCode].length == 2){
+                socket.emit("show-code", roomCode, ".playerTwoScore");
+            } else {
+                socket.emit("show-code", roomCode, ".playerThreeScore");
+            }
         }
+        
         if(roomInfo && roomInfo[roomCode].length == 3) {
             let clientsInRoom = roomInfo[roomCode];
             let currentTurn = roomTurns[roomCode];

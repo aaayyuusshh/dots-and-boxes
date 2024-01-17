@@ -512,11 +512,18 @@ createGameButton.addEventListener("click", e => {
     socket.emit("create-game", roomCode);
 });
 
-socket.on("show-code", roomCode => {
+socket.on("show-code", (roomCode, scoreContainer) => {
     // <h1 class="gameCodeTitle">Game Code:<span class="gameCode"></span></h1>
     let gameCodeTitle = document.querySelector(".gameCodeTitle");
     let gameCode = document.querySelector(".gameCode");
     gameCode.textContent = " " + roomCode;
+
+    let playerOneScoreContainer = document.querySelector(scoreContainer);
+    let turnImage = document.createElement("img");
+    turnImage.src = "img/you.png";
+    let firstChild = playerOneScoreContainer.firstChild;
+
+    playerOneScoreContainer.insertBefore(turnImage, firstChild);
 });
 
 socket.on("remove-wait-modal", () => {
