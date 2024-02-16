@@ -1,7 +1,4 @@
-/* server side javascript in node.js */
-
 const e = require('cors');
-
 const { Server } = require("socket.io");
 
 const io = new Server(3000, {
@@ -10,16 +7,14 @@ const io = new Server(3000, {
     },
 });
 
-let rooms = [];     //list of all room id's
-let roomInfo = {};  //info regarding all rooms
-
+let rooms = []; 
+let roomInfo = {};
 let clientRoomMapping = {};
 let roomTurns = {};
 
 io.on('connection', (socket) => {
     console.log("\n---server connection established---", socket.id, "\n");
 
-    //handling a new room being created
     socket.on("create-game", (roomCode) => {
         debugLogs("create", socket.id, roomCode)
         rooms.push(roomCode);
@@ -27,13 +22,10 @@ io.on('connection', (socket) => {
         roomInfo[roomCode].push(socket.id);
         clientRoomMapping[socket.id] = roomCode;
         roomTurns[roomCode] = 1;
-        console.log(roomTurns.roomCode);
         socket.join(roomCode);
         socket.emit("show-code", roomCode, ".playerOneScore");
     });
 
-    //handling an existing room being joined
-    //@TODO: need to use the .to("room name") to only send moves to clients in the same room (do this at the end)
     socket.on("join-game", roomCode => {
         console.log("--server recieved the join request--");
         if(rooms.includes(roomCode) && roomInfo[roomCode].length < 3) {
@@ -56,7 +48,7 @@ io.on('connection', (socket) => {
             socket.to(clientsInRoom[currentTurn-1]).emit("activate-event-listener");
         }
 
-        console.log("All players inside this room: ", roomInfo.roomCode);
+        console.log("All players inside this room: ", roomInfo[roomCode]);
     });
 
     socket.on("switch-turns", () => {
@@ -68,40 +60,11 @@ io.on('connection', (socket) => {
         socket.to(clientsInRoom[currentTurn%3]).emit("activate-event-listener");
     })
 
-    // socket.on("highlight-request", () => {
-    //     let roomNumber = clientRoomMapping[socket.id];
-    //     // console.log(`test: ${roomNumber}`);
-
-    //     let clientsInRoom = roomInfo[roomNumber];
-    //     // console.log(`clientInRoom test: ${clientsInRoom}`);
-        
-    //     let currTurn = roomTurns[roomNumber];
-    //     // console.log(`test currTurn: ${currTurn}, ${typeof currTurn}`);
-        
-    //     if(socket.id === clientsInRoom[currTurn-1]){
-    //         socket.emit("allow-highlight");
-    //     }
-    // });
-
-    //handle highlighting
     socket.on("highlight-other-clients", (canvasX, canvasY) => {
         console.log(canvasX, canvasY);
         socket.to(clientRoomMapping[socket.id]).emit("allow-highlight-other-clients", canvasX, canvasY)
     });
 
-    // socket.on("move-request", () => {
-    //     //@TODO: put this in a function
-    //     let roomNumber = clientRoomMapping[socket.id];
-    //     let clientsInRoom = roomInfo[roomNumber];
-    //     let currTurn = roomTurns[roomNumber];
-
-    //     if(socket.id === clientsInRoom[currTurn-1]) {
-    //         socket.emit("allow-move");
-    //         currTurn = (currTurn % 3) + 1; //switching turns
-    //     }
-    // });
-
-    //handling making a move
     socket.on("move-other-clients", currTurn => {
         socket.to(clientRoomMapping[socket.id]).emit("allow-move-other-clients");
     });

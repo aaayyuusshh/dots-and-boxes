@@ -1,4 +1,3 @@
-//game constants
 const GRID_HEIGHT = 550;
 const GRID_WIDTH = 550;
 const NUMBER_OF_CELLS = 4;   //number of cells in the grid

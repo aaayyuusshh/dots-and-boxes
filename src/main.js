@@ -1,23 +1,11 @@
-/* client script file (landing page) */
-
-/* main script file */
-
-//imports
 import {cell as cell} from "./cell.js"
 import {socket} from "./socket.js"
 
-//game constants
 const GRID_HEIGHT = 550;
 const GRID_WIDTH = 550;
-const NUMBER_OF_CELLS = 4;   //number of cells in the grid
+const NUMBER_OF_CELLS = 4;  
 const CELL_HEIGHT = GRID_HEIGHT / (NUMBER_OF_CELLS + 2);  //height of an individual cell, +2 to account for t&b margins
 const CELL_WIDTH = GRID_WIDTH / (NUMBER_OF_CELLS + 2);    //width of an individual cell, +2 to account for l&r margins
-
-//game variables
-var cellsArray;             //contains each cell in the grid & its properties
-var currHighlightedCells;   //cells highlighted at the current moment, nullify everytime mouse moves.
-var currTurn;               //whose turn is it right now?
-var scores = {playerOne: 0, playerTwo: 0, playerThree: 0};  //score tracking object
 
 const Turn = {
     PlayerOne: 1,
@@ -25,16 +13,20 @@ const Turn = {
     PlayerThree: 3
 }
 
-var canvas = document.getElementById("gameCanvas");
-var ctx = getDrawingContext();
-// var boundingCanvasRect = canvas.getBoundingClientRect();
+let cellsArray; //contains each cell in the grid & its properties
+let currHighlightedCells;
+let currTurn;
+let scores = {playerOne: 0, playerTwo: 0, playerThree: 0};
 
-var playerOneScore = document.querySelectorAll(".playerOneScore .score");
-var playerTwoScore = document.querySelectorAll(".playerTwoScore .score");
-var playerThreeScore = document.querySelectorAll(".playerThreeScore .score");
-var gameOverModal = document.querySelector(".gameOverModal");
-var gameOverModalWinnerText = document.querySelector(".winnerText");
-var restartButton = document.querySelector(".restartButton");
+let canvas = document.getElementById("gameCanvas");
+let ctx = getDrawingContext();
+
+let playerOneScore = document.querySelectorAll(".playerOneScore .score");
+let playerTwoScore = document.querySelectorAll(".playerTwoScore .score");
+let playerThreeScore = document.querySelectorAll(".playerThreeScore .score");
+let gameOverModal = document.querySelector(".gameOverModal");
+let gameOverModalWinnerText = document.querySelector(".winnerText");
+let restartButton = document.querySelector(".restartButton");
 
 socket.on("activate-event-listener", ()=> {
     console.log("here");
@@ -46,14 +38,12 @@ socket.on("deactivate-event-listener", ()=> {
     removeGameBoardEventListeners();
 });
 
-// listenForGameBoardEvents();
 gameInitialization();
 runGameLoop();
 listenForRefreshEvent();
 
 //runs once every game
 function gameInitialization() {
-    //whose turn is it at the start of the game? - always playerOne(blue)
     currTurn = Turn.PlayerOne;
 
     //initializing the cellsArray with all cells in our board
@@ -80,7 +70,6 @@ function listenForGameBoardEvents() {
     canvas.addEventListener("click", move);
 }
 
-//remove game board specific event listeners once game is over as we can't highlight/make a move anymore
 function removeGameBoardEventListeners() {
       canvas.removeEventListener("mousemove", highlight)
       canvas.removeEventListener("click", move);
@@ -107,7 +96,6 @@ function checkForPotentialAnimations() {
 
 function checkForTexts(cell) {
     if(cell.cellOwner != null) {
-        // console.log("here");
         drawPlayerName(cell);
     }
 }
@@ -199,9 +187,6 @@ function drawCircles() {
 }
 
 function drawLine(initialX, initialY, destinationX, destinationY, isDark, player) {
-    // console.log("here");
-    // console.log(initialX, initialY, destinationX, destinationY);
-    
     //color determination
     let color = null;
     if(isDark) {
@@ -258,7 +243,7 @@ function move2() {
     if(currHighlightedCells.length == 0 || currHighlightedCells == null) {
         return;
     }
-    var switchPlayers = true;
+    let switchPlayers = true;
 
     for(let highlightedCell of currHighlightedCells) {
         if(!setMove(cellsArray[highlightedCell.row][highlightedCell.col])) {
@@ -282,13 +267,12 @@ function move2() {
 
 //triggered when a "click" event occurs
 function move(event) {
-
     socket.emit("move-other-clients", currTurn);
 
     if(currHighlightedCells.length == 0 || currHighlightedCells == null) {
         return;
     }
-    var switchPlayers = true;
+    let switchPlayers = true;
 
     for(let highlightedCell of currHighlightedCells) {
         if(!setMove(cellsArray[highlightedCell.row][highlightedCell.col])) {
@@ -298,7 +282,6 @@ function move(event) {
 
     //switch players after a successful move.
     if(switchPlayers) {
-
         socket.emit("switch-turns");
 
         if(currTurn == Turn.PlayerOne) {
@@ -311,7 +294,6 @@ function move(event) {
             currTurn = Turn.PlayerOne;
         }
     }
-
 }
 
 function setMove(cell) {
@@ -331,7 +313,7 @@ function setMove(cell) {
         cell.selected.bottom = true;
         cell.owner.bottom = currTurn;
     }
-    //clear highlighting bc now we're draw that line
+    //clear highlighting bc now we're drawing that line
     cell.highlightSide = null;
 
     cell.linesDrawn++;
@@ -347,9 +329,8 @@ function setMove(cell) {
 }
 
 function returnWinnerName() {
-    var maxScore = Math.max(scores.playerOne, scores.playerTwo, scores.playerThree);
+    let maxScore = Math.max(scores.playerOne, scores.playerTwo, scores.playerThree);
     
-    //@TODO tie cases
     if(maxScore == scores.playerOne) {
         return "Player 1";
     } 
@@ -366,11 +347,8 @@ function sumScores() {
 }
 
 function checkForGameOver() {
-    //game is over in this case
     if(sumScores() == NUMBER_OF_CELLS * NUMBER_OF_CELLS) {
-        console.log("game over!");
 
-        //display game over modal
         gameOverModal.style.display = "flex";
         gameOverModalWinnerText.textContent = `${returnWinnerName()} Wins!`;
 
@@ -381,15 +359,12 @@ function checkForGameOver() {
 function incrementScores() {
     if(currTurn == Turn.PlayerOne) {
         scores.playerOne++;
-        console.log("Player 1 square:", scores.playerOne);
     } 
     else if(currTurn == Turn.PlayerTwo) {
         scores.playerTwo++;
-        console.log("Player 2 square:", scores.playerTwo);
     } 
     else if(currTurn == Turn.PlayerThree) {
         scores.playerThree++;
-        console.log("Player 3 square:", scores.playerThree);
     }
 }
 
@@ -420,7 +395,6 @@ socket.on("allow-highlight-other-clients", (canvasX, canvasY) => {
     highlight2(canvasX, canvasY);
 });
 
-//triggered when there is a "mousemove" event
 function highlight2(canvasX, canvasY) {
     clearPreviousHighlighting();
 
@@ -428,7 +402,7 @@ function highlight2(canvasX, canvasY) {
     for(let i = 0; i < cellsArray.length; i++) {
         for(let j =0; j < cellsArray[0].length; j++) {
             if(cellsArray[i][j].isPartOf(canvasX, canvasY)) {
-                //find closest and set highlight var of the square to the closest
+                //find closest and set highlight let of the square to the closest
                 findClosestAndSetHighlight(cellsArray[i][j], canvasX, canvasY);
 
                 if(cellsArray[i][j].highlightSide != null) {
@@ -446,13 +420,13 @@ function highlight(event) {
     clearPreviousHighlighting();
 
     //coordinates relative to the DOM
-    var screenX = event.clientX;
-    var screenY = event.clientY;
-    var boundingCanvasRect = canvas.getBoundingClientRect();
+    let screenX = event.clientX;
+    let screenY = event.clientY;
+    let boundingCanvasRect = canvas.getBoundingClientRect();
 
     //extract coordiantes relative to the canvas
-    var canvasX = screenX - boundingCanvasRect.left;
-    var canvasY = screenY - boundingCanvasRect.top;
+    let canvasX = screenX - boundingCanvasRect.left;
+    let canvasY = screenY - boundingCanvasRect.top;
 
     socket.emit("highlight-other-clients", canvasX, canvasY);
 
@@ -460,7 +434,7 @@ function highlight(event) {
     for(let i = 0; i < cellsArray.length; i++) {
         for(let j =0; j < cellsArray[0].length; j++) {
             if(cellsArray[i][j].isPartOf(canvasX, canvasY)) {
-                //find closest and set highlight var of the square to the closest
+                //find closest and set highlight let of the square to the closest
                 findClosestAndSetHighlight(cellsArray[i][j], canvasX, canvasY);
 
                 if(cellsArray[i][j].highlightSide != null) {
@@ -473,12 +447,12 @@ function highlight(event) {
 }
 
 function findClosestAndSetHighlight(cell, x, y) {
-    var distanceToLeft = x - cell.left;
-    var distanceToRight = cell.right - x;
-    var distanceToTop = y - cell.top;
-    var distanceToBottom = cell.bottom - y;
+    let distanceToLeft = x - cell.left;
+    let distanceToRight = cell.right - x;
+    let distanceToTop = y - cell.top;
+    let distanceToBottom = cell.bottom - y;
     //calculate the side that's the closest to the x,y coords
-    var closestSide =  Math.min(distanceToLeft, distanceToRight, distanceToTop, distanceToBottom);
+    let closestSide =  Math.min(distanceToLeft, distanceToRight, distanceToTop, distanceToBottom);
     
     if(closestSide == distanceToLeft && !cell.selected.left) {
         cell.highlightSide = "left";
@@ -501,19 +475,18 @@ socket.on("connect", () => {
 });
 
 //handling a new room being created
-var createGameButton = document.querySelector(".playNowButton");
+let createGameButton = document.querySelector(".playNowButton");
 createGameButton.addEventListener("click", e => {
-    var landingPage = document.querySelector(".landingPageBody");
-    var gamePage = document.getElementById("gamePage");
+    let landingPage = document.querySelector(".landingPageBody");
+    let gamePage = document.getElementById("gamePage");
     landingPage.style.display = "none";
     gamePage.style.display = "flex";
-    var roomCode = generateRoomCode(7);
+    let roomCode = generateRoomCode(7);
 
     socket.emit("create-game", roomCode);
 });
 
 socket.on("show-code", (roomCode, scoreContainer) => {
-    // <h1 class="gameCodeTitle">Game Code:<span class="gameCode"></span></h1>
     let gameCodeTitle = document.querySelector(".gameCodeTitle");
     let gameCode = document.querySelector(".gameCode");
     gameCode.textContent = " " + roomCode;
@@ -533,30 +506,28 @@ socket.on("remove-wait-modal", () => {
 });
 
 //handling an existing room being joined
-var joinRoomContainer = document.querySelector(".joinRoomContainer");
-var roomCodeInput = document.getElementById("roomCodeInput");
+let joinRoomContainer = document.querySelector(".joinRoomContainer");
+let roomCodeInput = document.getElementById("roomCodeInput");
 joinRoomContainer.addEventListener("submit", e => {
     e.preventDefault();
     console.log("clicked join!");
 
-    var roomCode = roomCodeInput.value;
+    let roomCode = roomCodeInput.value;
     socket.emit("join-game", roomCode);
 });
 
 socket.on("allow-join", () => {
-    // window.open("/game.html", "_self");
-    var landingPage = document.querySelector(".landingPageBody");
-    var gamePage = document.getElementById("gamePage");
+    let landingPage = document.querySelector(".landingPageBody");
+    let gamePage = document.getElementById("gamePage");
     landingPage.style.display = "none";
     gamePage.style.display = "flex";
     gamePage.scrollIntoView();
 });
 
 function generateRoomCode(length) {
-    //@TODO: need an algo or API to generate random codes
-    var result = "";
-    var characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-    var charactersLength = characters.length;
+    let result = "";
+    let characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    let charactersLength = characters.length;
     for(let i = 0; i < length; i++) {
         result += characters.charAt(Math.floor(Math.random() * charactersLength));
     }
