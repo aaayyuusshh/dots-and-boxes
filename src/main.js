@@ -490,7 +490,6 @@ socket.on("show-code", (roomCode, scoreContainer) => {
     let gameCodeTitle = document.querySelector(".gameCodeTitle");
     let gameCode = document.querySelector(".gameCode");
     gameCode.textContent = " " + roomCode;
-
     let playerOneScoreContainer = document.querySelector(scoreContainer);
     let turnImage = document.createElement("img");
     turnImage.src = "img/you.png";
@@ -499,6 +498,14 @@ socket.on("show-code", (roomCode, scoreContainer) => {
     playerOneScoreContainer.insertBefore(turnImage, firstChild);
 });
 
+socket.on("update-num-of-players", (numberOfPlayers, playerTwoIcon, playerThreeIcon) => {
+    let numberOfPlayersJoined = document.querySelector(".numberOfPlayersJoined");
+    let playerTwoIconContainer = document.querySelector(".playerTwoIcon");
+    let playerThreeIconContainer = document.querySelector(".playerThreeIcon");
+    numberOfPlayersJoined.textContent = numberOfPlayers;
+    playerTwoIconContainer.textContent = playerTwoIcon;
+    playerThreeIconContainer.textContent = playerThreeIcon;
+});
 
 socket.on("remove-wait-modal", () => {
     console.log("remove-wait-modal");

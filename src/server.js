@@ -40,16 +40,20 @@ io.on('connection', (socket) => {
             socket.emit("allow-join");
             if(roomInfo[roomCode].length == 2){
                 socket.emit("show-code", roomCode, ".playerTwoScore");
+                io.to(roomCode).emit("update-num-of-players", 2, "🐶", "_")
             } else {
                 socket.emit("show-code", roomCode, ".playerThreeScore");
+                io.to(roomCode).emit("update-num-of-players", 3, "🐶", "🐮")
             }
         }
         
         if(roomInfo[roomCode] && roomInfo[roomCode].length == 3) {
             let clientsInRoom = roomInfo[roomCode];
             let currentTurn = roomTurns[roomCode];
-            io.to(roomCode).emit("remove-wait-modal");
-            socket.to(clientsInRoom[currentTurn-1]).emit("activate-event-listener");
+            setTimeout(() => {
+                io.to(roomCode).emit("remove-wait-modal");
+                socket.to(clientsInRoom[currentTurn-1]).emit("activate-event-listener");
+            }, 2000)
         }
 
         console.log("All players inside this room: ", roomInfo[roomCode]);
