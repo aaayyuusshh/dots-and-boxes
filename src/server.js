@@ -28,6 +28,10 @@ io.on('connection', (socket) => {
 
     socket.on("join-game", roomCode => {
         console.log("--server recieved the join request--");
+        if(!rooms.includes(roomCode)) {
+         socket.emit("show-wrong-join", roomCode);   
+        }
+
         if(rooms.includes(roomCode) && roomInfo[roomCode].length < 3) {
             debugLogs("join", socket.id, roomCode);
             roomInfo[roomCode].push(socket.id);
@@ -41,7 +45,7 @@ io.on('connection', (socket) => {
             }
         }
         
-        if(roomInfo && roomInfo[roomCode].length == 3) {
+        if(roomInfo[roomCode] && roomInfo[roomCode].length == 3) {
             let clientsInRoom = roomInfo[roomCode];
             let currentTurn = roomTurns[roomCode];
             io.to(roomCode).emit("remove-wait-modal");

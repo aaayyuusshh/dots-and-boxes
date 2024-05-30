@@ -194,7 +194,8 @@ a {
 .rightHeroSide {
     display: flex;
     flex-direction: column;
-    justify-content: space-evenly;
+    /* justify-content: space-evenly; */
+    gap: 20px;
     width: 450px;
     height: 410px;
     margin-top: 60px;
@@ -330,4 +331,15 @@ a {
 .waitImage {
     height: 60px;
     width:60px;
+}
+
+.joinFail {
+    display: none;
+    margin-left: 15px;
+    color: white;
+    background-color: rgba(255, 0, 0, 0.44);
+    align-self: start;
+    padding: 4px 8px;
+    border-radius: 5px;
+
 }

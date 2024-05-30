@@ -499,6 +499,7 @@ socket.on("show-code", (roomCode, scoreContainer) => {
     playerOneScoreContainer.insertBefore(turnImage, firstChild);
 });
 
+
 socket.on("remove-wait-modal", () => {
     console.log("remove-wait-modal");
     let waitContainer = document.querySelector(".waitContainer");
@@ -514,6 +515,11 @@ joinRoomContainer.addEventListener("submit", e => {
 
     let roomCode = roomCodeInput.value;
     socket.emit("join-game", roomCode);
+});
+
+socket.on("show-wrong-join", (roomCode) => {
+    let joinFail = document.querySelector(".joinFail")
+    joinFail.style.display = "flex";
 });
 
 socket.on("allow-join", () => {
