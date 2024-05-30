@@ -14,7 +14,6 @@ export function cell (x, y) {
     this.owner = {left: null, right: null, top: null, bottom: null};
     this.linesDrawn = 0;
     this.cellOwner = null;
-
     this.isPartOf = function(x, y) {
         return this.left <= x && this.right > x
             && this.top <= y && this.bottom > y;

@@ -1,24 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dots & Boxes</title>
-    <link rel="stylesheet" href="styles.css">
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Poppins:wght@400;600&display=swap');
-    </style>
-</head>
-<body>
-    <div class="landingPageBody">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Dots & Boxes</title>
+        <link rel="stylesheet" href="styles.css">
+        <style>
+            @import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Poppins:wght@400;600&display=swap');
+        </style>
+    </head>
+    <body>
+        <div class="landingPageBody">
         <nav class="navBarContainer">
             <img class="paperImage" src="img/paper.png" alt="">
             <h1 class="navBarTitle">dots & boxes.</h1>
             <img class="pencilImage" src="img/pencil.png" alt="">
             <a href="https://en.wikipedia.org/wiki/Dots_and_Boxes"><img class="navBarWikiImage" src="img/wikiImage.png" alt=""></a>
         </nav>
-    
         <section class="heroSection">
             <div class="leftHeroSide">
                 <img class="landingPageImage" src="img/landingImage2.jpeg" alt="">
@@ -39,77 +38,71 @@
                 </form>
                 <div class="joinFail">err, invalid code!</div>
         </section>
-    </div>
-   
-    <div id="gamePage">
-        <div class="pageWrapper">
-            <div class="titleContainer">
-                <h1 class="titleText">dots & boxes</h1>
-                <div class="iconsContainer">
-                    <img class="restartButton" src="img/restartIcon.png" alt="">
-                    <a href="index.html"><img class="homepageButton" src="img/homePage.png" alt=""></a>
+        </div>
+        <div id="gamePage">
+            <div class="pageWrapper">
+                <div class="titleContainer">
+                    <h1 class="titleText">dots & boxes</h1>
+                    <div class="iconsContainer">
+                        <img class="restartButton" src="img/restartIcon.png" alt="">
+                        <a href="index.html"><img class="homepageButton" src="img/homePage.png" alt=""></a>
+                    </div>
                 </div>
-            </div>
-            
-            <div class="gameTop">
-                <a href="index.html"><img class="homepageButton" src="img/homePage.png" alt=""></a>
-                <h1 class="gameCodeTitle">Game Code:<span class="gameCode"></span></h1>
-            </div>
-        
-            <div class="waitContainer">
-                <!-- <img class="waitImage" src="img/wait.png" alt=""> -->
-                <p class="waitTitle">Lobby</p>
-                <hr>
-                <div class="waitTextContainer">
-                    <p class="waitText">Waiting for players to join...</p>
-                    <p class="waitText">Game will start when 3 players have joined.</p>
-                    <p class="numberOfPlayers"><span class="numberOfPlayersJoined">1</span>/3 Players</p>
-                    <div class="joinedPlayersDisplay">
-                        <div class="playerOneIcon">🐼</div>
-                        <div class="playerTwoIcon">_</div>
-                        <div class="playerThreeIcon">_</div>
+                <div class="gameTop">
+                    <a href="index.html"><img class="homepageButton" src="img/homePage.png" alt=""></a>
+                    <h1 class="gameCodeTitle">Game Code:<span class="gameCode"></span></h1>
+                </div>
+                <div class="waitContainer">
+                    <!-- <img class="waitImage" src="img/wait.png" alt=""> -->
+                    <p class="waitTitle">Lobby</p>
+                    <hr>
+                    <div class="waitTextContainer">
+                        <p class="waitText">Waiting for players to join...</p>
+                        <p class="waitText">Game will start when 3 players have joined.</p>
+                        <p class="numberOfPlayers"><span class="numberOfPlayersJoined">1</span>/3 Players</p>
+                        <div class="joinedPlayersDisplay">
+                            <div class="playerOneIcon">🐼</div>
+                            <div class="playerTwoIcon">_</div>
+                            <div class="playerThreeIcon">_</div>
+                        </div>
+                    </div>
+                </div>
+                <canvas id="gameCanvas" width="700" height="700"></canvas>
+                <div class="scoreContainer">
+                    <div class="playerOneScore">
+                        <!-- <img class ="youImg" src="img/you.png" alt=""> -->
+                        <p class="tag">Player 🐼</p>
+                        <p class="score">0</p>
+                    </div>
+                    <div class="playerTwoScore">
+                        <p class="tag">Player 🐶</p>
+                        <p class="score">0</p>
+                    </div>
+                    <div class="playerThreeScore">
+                        <p class="tag">Player 🐮</p>
+                        <p class="score">0</p>
                     </div>
                 </div>
             </div>
-    
-            <canvas id="gameCanvas" width="700" height="700"></canvas>
-    
-            <div class="scoreContainer">
+            <div class="gameOverModal">
+                <p class="modalCloseButton"">X</p>
                 <div class="playerOneScore">
-                    <!-- <img class ="youImg" src="img/you.png" alt=""> -->
-                    <p class="tag">Player 🐼</p>
+                    <p class="tag">Player 1:</p>
                     <p class="score">0</p>
                 </div>
-                <div class="playerTwoScore"> 
-                    <p class="tag">Player 🐶</p>
+                <div class="playerTwoScore">
+                    <p class="tag">Player 2:</p>
                     <p class="score">0</p>
                 </div>
-                <div class="playerThreeScore">      
-                    <p class="tag">Player 🐮</p>
+                <div class="playerThreeScore">
+                    <p class="tag">Player 3:</p>
                     <p class="score">0</p>
                 </div>
+                <p class="winnerText">Player X Wins!</p>
+                <p class="restartText">Click restart button.</p>
             </div>
         </div>
-    
-        <div class="gameOverModal">
-            <p class="modalCloseButton"">X</p>
-            <div class="playerOneScore">
-                <p class="tag">Player 1:</p>
-                <p class="score">0</p>
-            </div>
-            <div class="playerTwoScore"> 
-                <p class="tag">Player 2:</p>
-                <p class="score">0</p>
-            </div>
-            <div class="playerThreeScore">
-                <p class="tag">Player 3:</p>
-                <p class="score">0</p>
-            </div>
-           <p class="winnerText">Player X Wins!</p>
-           <p class="restartText">Click restart button.</p>
-        </div>
-    </div>
-</body>
-<script defer src="http://127.0.0.1:3000/socket.io/socket.io.js"></script>
-<script defer src="main.js" type="module"></script>
+    </body>
+    <script defer src="http://127.0.0.1:3000/socket.io/socket.io.js"></script>
+    <script defer src="main.js" type="module"></script>
 </html>
