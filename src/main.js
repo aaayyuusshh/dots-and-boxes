@@ -38,6 +38,26 @@ socket.on("deactivate-event-listener", ()=> {
     removeGameBoardEventListeners();
 });
 
+socket.on("highlight-turn", (turn) => {
+    let playerOneScore = document.querySelector(".playerOneScore .tag");
+    let playerTwoScore = document.querySelector(".playerTwoScore .tag");
+    let playerThreeScore = document.querySelector(".playerThreeScore .tag");
+
+    if(turn == Turn.PlayerOne) {
+        playerOneScore.style.backgroundColor = "rgb(0, 0, 255)";
+        playerTwoScore.style.backgroundColor = "rgba(255, 0, 0, 0.153)";
+        playerThreeScore.style.backgroundColor = "rgba(113, 209, 113, 0.181)";
+    } else if(turn == Turn.PlayerTwo) {
+        playerOneScore.style.backgroundColor = "rgba(0, 0, 255, 0.165)";
+        playerTwoScore.style.backgroundColor = "rgb(255, 0, 0)";
+        playerThreeScore.style.backgroundColor = "rgba(113, 209, 113, 0.181)";
+    } else {
+        playerOneScore.style.backgroundColor = "rgba(0, 0, 255, 0.165)";
+        playerTwoScore.style.backgroundColor = "rgba(255, 0, 0, 0.153)";
+        playerThreeScore.style.backgroundColor = "rgb(58, 207, 17)";
+    }
+})
+
 gameInitialization();
 runGameLoop();
 listenForRefreshEvent();
@@ -172,7 +192,7 @@ function getDrawingContext() {
 
 function drawBoard() {
     ctx.fillStyle = "rgb(201, 211, 216)"
-    ctx.fillRect(0, 0, GRID_HEIGHT, GRID_WIDTH);
+    ctx.fillRect(0, 0, GRID_WIDTH, GRID_HEIGHT);
 }
 
 function drawCircles() {
@@ -511,6 +531,8 @@ socket.on("remove-wait-modal", () => {
     console.log("remove-wait-modal");
     let waitContainer = document.querySelector(".waitContainer");
     waitContainer.style.display = "none";
+    let scoreContainer = document.querySelector(".scoreContainer");
+    scoreContainer.style.display = "flex"
 });
 
 //handling an existing room being joined

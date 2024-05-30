@@ -65,6 +65,7 @@ io.on('connection', (socket) => {
         let currentTurn = roomTurns[roomCode];
         socket.emit("deactivate-event-listener");
         roomTurns[roomCode] = (currentTurn % 3) + 1;
+        io.emit("highlight-turn", (roomTurns[roomCode]))
         socket.to(clientsInRoom[currentTurn%3]).emit("activate-event-listener");
     })
 

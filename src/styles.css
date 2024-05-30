@@ -57,7 +57,6 @@ a {
     display: flex;
     justify-content: space-between;
     width: 650px;
- 
     /* border: 2px solid rgb(0, 0, 0); */
     border-radius: 10px;
 }
@@ -67,7 +66,7 @@ a {
     display: flex;
 }
 .playerOneScore .tag {
-    background-color: rgb(126, 126, 255);
+    background-color: rgb(0, 0, 255);
     font-size: 30px;
     font-weight: 600;
     padding: 0px 10px;
@@ -83,7 +82,7 @@ a {
     display: flex;
 }
 .playerTwoScore .tag {
-    background-color: rgb(255, 81, 81);
+    background-color: rgba(255, 0, 0, 0.153);
     font-size: 30px;
     font-weight: 600;
     padding: 0px 10px;
@@ -99,7 +98,7 @@ a {
     display: flex;
 }
 .playerThreeScore .tag {
-    background-color: rgb(113, 209, 113);
+    background-color: rgba(113, 209, 113, 0.181);
     font-size: 30px;
     font-weight: 600;
     padding: 0px 10px;
