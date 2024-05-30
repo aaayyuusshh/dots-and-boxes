@@ -54,7 +54,7 @@ a {
 }
 
 .scoreContainer {
-    display: flex;
+    display: none;
     justify-content: space-between;
     width: 650px;
     /* border: 2px solid rgb(0, 0, 0); */
