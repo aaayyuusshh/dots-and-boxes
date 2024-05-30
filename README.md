@@ -7,10 +7,15 @@ dots-and-boxes is an online multiplayer implementation of the classic Dots and B
 ## Screenshots
 <img width="1434" alt="Screen Shot 2024-01-16 at 10 50 49 PM" src="https://github.com/aaayyuusshh/dots-and-boxes/assets/80851741/b82b1729-3e6c-4f81-996c-1f1b3b5a8e14">
 
-<img width="1438" alt="Screen Shot 2024-01-16 at 10 52 15 PM" src="https://github.com/aaayyuusshh/dots-and-boxes/assets/80851741/5c562d70-7106-4464-ab7c-4cd6df014a59">
 
-**Gameplay with 3 clients**
-![Screen Shot 2024-01-16 at 10 58 16 PM](https://github.com/aaayyuusshh/dots-and-boxes/assets/80851741/516c6e74-2018-4892-a2b6-30019b7bc722)
+**Waiting for players:**
+<img width="1438" alt="Screenshot 2024-05-30 at 6 06 39 AM" src="https://github.com/aaayyuusshh/dots-and-boxes/assets/80851741/2c316c57-a46f-4380-a442-e2c414798c86">
+
+**Game screen of one client:**
+<img width="1438" alt="Screenshot 2024-05-30 at 6 08 52 AM" src="https://github.com/aaayyuusshh/dots-and-boxes/assets/80851741/3adf6c45-b38f-4a89-975e-4aabd5650d06">
+
+**Gameplay with 3 clients:**
+![Screenshot 2024-05-30 at 6 14 06 AM](https://github.com/aaayyuusshh/dots-and-boxes/assets/80851741/46c4ebd9-8889-44cf-81ea-0a1003e3c403)
 
 ## Technologies Used
 
