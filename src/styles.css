@@ -57,20 +57,21 @@ a {
     display: flex;
     justify-content: space-between;
     width: 650px;
-    height: 60px;
+ 
     /* border: 2px solid rgb(0, 0, 0); */
     border-radius: 10px;
 }
 
 .playerOneScore {
-    height: 30px;
     /* border: 1px solid black; */
     display: flex;
 }
 .playerOneScore .tag {
-    color: rgb(126, 126, 255);
+    background-color: rgb(126, 126, 255);
     font-size: 30px;
     font-weight: 600;
+    padding: 0px 10px;
+    border-radius: 5px;
 }
 .playerOneScore .score {
     font-size: 30px;
@@ -78,14 +79,15 @@ a {
 }
 
 .playerTwoScore {  
-    height: 30px;
     /* border: 1px solid black; */
     display: flex;
 }
 .playerTwoScore .tag {
-    color: rgb(255, 81, 81);
+    background-color: rgb(255, 81, 81);
     font-size: 30px;
     font-weight: 600;
+    padding: 0px 10px;
+    border-radius: 5px;
 }
 .playerTwoScore .score {
     font-size: 30px;
@@ -93,13 +95,15 @@ a {
 }
 
 .playerThreeScore {
-    height: 30px;
     /* border: 1px solid black; */
     display: flex;
-}.playerThreeScore .tag {
-    color: rgb(113, 209, 113);
+}
+.playerThreeScore .tag {
+    background-color: rgb(113, 209, 113);
     font-size: 30px;
     font-weight: 600;
+    padding: 0px 10px;
+    border-radius: 5px;
 }
 .playerThreeScore .score {
     font-size: 30px;
@@ -358,4 +362,8 @@ a {
     align-self: start;
     padding: 4px 8px;
     border-radius: 5px;
+}
+
+.titleContainer {
+    display: none;
 }

@@ -491,8 +491,8 @@ socket.on("show-code", (roomCode, scoreContainer) => {
     let gameCode = document.querySelector(".gameCode");
     gameCode.textContent = " " + roomCode;
     let playerOneScoreContainer = document.querySelector(scoreContainer);
-    let turnImage = document.createElement("img");
-    turnImage.src = "img/you.png";
+    let turnImage = document.createElement("p");
+    turnImage.textContent = "You→"
     let firstChild = playerOneScoreContainer.firstChild;
 
     playerOneScoreContainer.insertBefore(turnImage, firstChild);
