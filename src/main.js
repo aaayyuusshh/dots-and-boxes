@@ -1,8 +1,8 @@
 import {cell as cell} from "./cell.js"
 import {socket} from "./socket.js"
 
-const GRID_HEIGHT = 550;
-const GRID_WIDTH = 550;
+const GRID_HEIGHT = 700;
+const GRID_WIDTH = 700;
 const NUMBER_OF_CELLS = 4;  
 const CELL_HEIGHT = GRID_HEIGHT / (NUMBER_OF_CELLS + 2);  //height of an individual cell, +2 to account for t&b margins
 const CELL_WIDTH = GRID_WIDTH / (NUMBER_OF_CELLS + 2);    //width of an individual cell, +2 to account for l&r margins
