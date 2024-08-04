@@ -20,7 +20,8 @@ dots-and-boxes is an online multiplayer implementation of the classic Dots and B
 ## Technologies Used
 
 - **Frontend:** HTML, CSS, JavaScript
-- **Backend:** Node.js with Socket.io
+- **Backend:** Node.js, Express.js, Socket.io
+- **Database:** MongoDB
 
 ## Game Logic and Architecture
 
