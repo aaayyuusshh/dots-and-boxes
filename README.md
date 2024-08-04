@@ -24,7 +24,7 @@ dots-and-boxes is an online multiplayer implementation of the classic Dots and B
 
 ## Game Logic and Architecture
 
-### 1. Frontend (`main.js`)
+### 1. Frontend (`main.js`) 
 - **Game Initialization:**
   - The game starts by initializing the game board and necessary variables.
   - Cells are represented using the `cell` class defined in `cell.js`.
